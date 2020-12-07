@@ -13,7 +13,7 @@
 		var user_pw = frmLogin.user_pw.value;
 		
 		if((user_id.length == 0 || user_id == " ") || (user_pw.length == 0 || user_pw ==" ")){
-			alert("아이디와 비밀번호는 필수입니다");
+			alert("아이디와 비밀번호는 필수");
 		} else {
 			frmLogin.method = "post"; // <form>태그의 전송방식을 post로 설정함.
 			frmLogin.action = "login5"; // action속성을 서블릿 매핑이름인 login5로 설정함.
