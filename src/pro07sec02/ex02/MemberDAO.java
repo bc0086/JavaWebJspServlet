@@ -1,4 +1,4 @@
-package pro07sec02.ex01;
+package pro07sec02.ex02;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -11,7 +11,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-
 public class MemberDAO {
 	private PreparedStatement pstmt;
 	private Connection con;
@@ -19,7 +18,7 @@ public class MemberDAO {
 	
 	public MemberDAO() {
 		try {
-			// JNDI에 접근하기 위해 기본 경로("java:/comp/env") 지정
+			// JNDI에 접근하기 위해 기본 경로("java:/comp/env") 지정, 거의 고정됨
 			Context ctx = new InitialContext();
 			Context envContext = (Context) ctx.lookup("java:/comp/env");
 			
@@ -31,6 +30,7 @@ public class MemberDAO {
 		}
 	}
 	
+	// 회원정보 조회
 	public List<MemberVO> listMembers(){
 		List<MemberVO> list = new ArrayList<MemberVO>();
 		try {
@@ -69,4 +69,35 @@ public class MemberDAO {
 		}
 		return list;
 	}	
+	
+	// 회원등록
+	public void addMember(MemberVO memberVO) {
+		try {
+			con = dataFactory.getConnection();
+			
+			// 테이블에 저장할 회원 정보를 받아옴
+			String id = memberVO.getId();
+			String pwd = memberVO.getPwd();
+			String name = memberVO.getName();
+			String email = memberVO.getEmail();
+			
+			// insert문을 문자열로 만든다.
+			String query = "insert into t_member";
+			query += " (id, pwd, name, email)";
+			query += " values(?,?,?,?)";
+			System.out.println("prepareStatement: " + query);
+			
+			// insert문에 각 ?에 순서대로 회원정보를 셋팅
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pwd);
+			pstmt.setString(3, name);
+			pstmt.setString(4, email);
+			
+			pstmt.executeUpdate(); // 회원정보를 테이블에 추가
+			pstmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

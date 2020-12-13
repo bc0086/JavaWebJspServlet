@@ -1,4 +1,4 @@
-package pro07sec02.ex01;
+package pro07sec02.ex02;
 
 import java.sql.Date;
 
