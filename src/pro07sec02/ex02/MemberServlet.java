@@ -36,9 +36,11 @@ public class MemberServlet extends HttpServlet {
 			vo.setEmail(_email);
 			
 			dao.addMember(vo);
-		} else if(command != null && command.equals("delMember")) {
+		} 
+		// command값이 delMember인 경우 ID를 가져와 SQL문으로 전달해서 삭제
+		else if(command != null && command.equals("delMember")) {
 			String id = request.getParameter("id");
-			//dao.delMember(id);
+			dao.delMember(id);
 		}
 		List<MemberVO> list = dao.listMembers(); // listMembers()메서드로 회원정보를 조회
 		out.print("<html><body>");
@@ -62,11 +64,12 @@ public class MemberServlet extends HttpServlet {
 				+ "<td>" + joinDate + "</td>"						
 				+ "<td> "
 				+ "<a href='/JavaWebJspServlet/member3?command=delMember&id=" + id + "'>삭제</a>"
+					// 삭제를 클릭하면 command값과 회원 ID를 서블릿으로 전송 
 				+ "</td>"
 				+ "</tr>");
 		}
 		out.print("</table></body></html>");
-		out.print("<a href='/JavaWebJspServlet/pro07sec02.ex02.memberForm.html'>새 회원 등록하기 </a>");
+		out.print("<a href='/JavaWebJspServlet/pro07.sec02.ex02.memberForm.html'>새 회원 등록하기 </a>");
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
