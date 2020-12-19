@@ -39,15 +39,15 @@ public class Pro09LoginServlet2 extends HttpServlet {
 		out.print(data);
 		
 		user_address = URLEncoder.encode(user_address, "utf-8");
-		out.print("<a href='/JavaWebJspServlet/pro09second?user_id=" + user_id
-				+ "& user_pw=" + user_pw
-				+ "& user_address=" + user_address
-				+ "'>두 번쨰 서블릿으로 보내기</a>");
+		out.print("<a href='/JavaWebJspServlet/pro09second?user_id="+user_id
+				+"&user_pw="+user_pw
+				+"&user_address="+user_address
+				+"'>두 번쨰 서블릿으로 보내기</a>");
 		data += "</body></html>";
 		
 		out.print(data);
 	}
-
+	
 	public void init() {
 		System.out.println("init 메서드 호출");
 	}
