@@ -19,7 +19,7 @@ public class LoginImpl implements HttpSessionListener {
     	this.user_id = user_id;
     	this.user_pw = user_pw;
     }
-
+    
     @Override
     public void sessionCreated(HttpSessionEvent se)  { 
     	System.out.println("세션 생성");
@@ -31,5 +31,6 @@ public class LoginImpl implements HttpSessionListener {
     	System.out.println("세션 소멸");
     	--total_user;
     }
+    
 	
 }
