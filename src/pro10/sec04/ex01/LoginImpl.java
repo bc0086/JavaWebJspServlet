@@ -24,7 +24,7 @@ public class LoginImpl implements HttpSessionBindingListener {
 		++total_user;
 	}
 	
-	// 세션에서 소멸시 접속자 수를 감소시킨다.
+	// 세션에서 소멸시 접속자 수를  감소시킨다.
 	@Override
 	public void valueUnbound(HttpSessionBindingEvent arg0) {
 		System.out.println("사용자 접속 해제");
