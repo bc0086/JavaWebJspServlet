@@ -39,4 +39,22 @@
   	<param-name>menu_goods</param-name>
   	<param-value>상품조회 상품등록 상품수정 상품삭제</param-value>
   </context-param>
+  
+  <!-- pro12 에러코드에 따른 예외페이지 지정 -->
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/errPage/error_404.jsp</location>
+  </error-page>
+  
+  <error-page>
+  	<error-code>500</error-code>
+  	<location>/errPage/error_500.jsp</location>
+  </error-page>
+  
+  <!-- pro12 JSP welcome파일 지정하기 -->
+  <welcome-file-list>
+  	<welcome-file>/pro12/main.jsp</welcome-file>
+  	<welcome-file>/pro12/add.jsp</welcome-file>
+  	<welcome-file>/pro12/add.html</welcome-file>
+  </welcome-file-list>
 </web-app>

@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>페이지 디렉티브 태그 연습</title>
 </head>
 <body>
