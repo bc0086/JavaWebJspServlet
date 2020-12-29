@@ -15,7 +15,7 @@
 	/* MemberBean 객체 생성하여 각 회원정보를 속성에 설정 */
 	MemberBean m = new MemberBean(id, pwd, name, email);
 	
-	MemberDAO memberDAO = new MemberDAO();
+	MemberDAO memberDAO = new MemberDAO(); 
 	memberDAO.addMember(m); // 회원 정보를 테이블에 추가
 	
 	List membersList = memberDAO.listMembers(); // 전체 회원 정보를 조회
