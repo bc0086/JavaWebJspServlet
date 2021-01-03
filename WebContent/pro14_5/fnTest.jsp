@@ -45,10 +45,5 @@
 
 	<!-- 첫번쨰 문자열이 두번째 문자열을 포함하는지 판별 -->
 	fn:contains(title2, str1) = ${fn:contains(title2, str1) } <br />
-	
-	
-	
-	
-	
 </body>
 </html>
