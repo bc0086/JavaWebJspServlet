@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원 등록창</title>
 </head>
 <body>
 <form method="post"   action="member_action.jsp">
