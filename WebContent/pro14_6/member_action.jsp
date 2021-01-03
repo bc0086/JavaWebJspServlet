@@ -9,16 +9,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<%
+	String command = (String) request.getParameter("command");
+	MemberDAO memDAO = new MemberDAO();
+	List membersList = null;
+	if(command.equals("addMember")){
+%>
 <jsp:useBean id="m" class="pro14.sec02.ex01.MemberBean" />
 <jsp:setProperty property="*" name="m"/>
 <%
-	MemberDAO memberDAO = new MemberDAO();
-	memberDAO.addMember(m);
-		// 회원정보를 추가
-	List membersList = memberDAO.listMembers();
-		// 회원정보를 조회
-	request.setAttribute("membersList", membersList);
-		// 조회된 회원정보를 request에 바인딩
+		memDAO.addMember(m);
+		membersList = memDAO.listMembers();
+	} else if(command.equals("search")) {
+		String name= request.getParameter("name");
+		MemberBean memberBean = new MemberBean();
+		memberBean.setName(name);
+		membersList = memDAO.listMembers(memberBean); // 회원정보를 조회
+	}
+	request.setAttribute("membersList", membersList); // 조회된 회원정보를 request에 바인딩
 %>
 <title>Insert title here</title>
 </head>
