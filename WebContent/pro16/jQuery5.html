@@ -4,8 +4,21 @@
 <meta charset="UTF-8">
 <title>Class 셀렉터 연습</title>
 <script src="../js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+	function fn_process(){
+		var value = $("#t_input").val(); 
+		/* 제이쿼리에서 id로 텍스트박스에 접근하여 val()메서드를 이용하여 입력 값을 가져옴 */
+		$("#t_output").val(value);
+		/* 제이쿼이에서 id로 텍스트박스에 접근하여 val()메서드를 입력하여 값을 출력함 */
+	}
+</script>
 </head>
 <body>
-		
+	<input type="text" id="t_input" /> 
+    <input type="button" value="입력하기" onClick="fn_process()" /><br><br>
+  	<div>
+    	결과:<br>
+     	<input type="text" id="t_output"  disabled/>
+  	</div> 
 </body>
 </html>
