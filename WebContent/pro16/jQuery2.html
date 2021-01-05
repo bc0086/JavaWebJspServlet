@@ -2,9 +2,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>선택자 연습</title>
+<script src="../js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+	function addHtml(){
+		$("#article").html("안녕하세요" + "<br>");
+	}
+</script>
 </head>
 <body>
-
+	<div>
+		<p id="article"></p>
+	</div>
+	<input type="button" value="추가하기" onClick="addHtml()" />
 </body>
 </html>
