@@ -12,14 +12,21 @@
 		$("#checkJson").click(function(){
 			var jsonStr = '{"name":["홍길동", "이순신", "임꺽정"]}';
 				/* 이름을 저장하는 JSON배열을 name으로 전환함 */
-			var jsonObj = JSON.parse(jsonStr);
+			var jsonInfo = JSON.parse(jsonStr);
 				/* 제이쿼리의 JSON기능인 parse()메서드를 이용해 JSON자료형을 가져옴 */
-			var output = "회원 이름" <br />;
+			var output = "회원 이름<br />";
+			output += "=============<br>";
+			
+			for(var i in jsonInfo.name) {
+				output += jsonInfo.name[i] + "<br>";
+			}
+			$("#output").html(output);
 		});
 	});
 </script>
 </head>
 <body>
-
+	<a id="checkJson" style="cursor:pointer">출력</a><br><br>
+    <div id="output"></div>
 </body>
 </html>
