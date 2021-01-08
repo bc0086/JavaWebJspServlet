@@ -55,7 +55,7 @@
 			</c:when>
 		</c:choose>
 	</table>
-	<a href="">
+	<a href="${contextPage }/pro17/memberForm.do">
 		<p class="cls2">회원 가입하기</p>
 	</a>
 </body>

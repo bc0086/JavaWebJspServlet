@@ -29,6 +29,7 @@ public class MemberDAO {
 		}
 	}
 	
+	// 멤버 조회하기
 	public List<MemberVO> listMembers() {
 		List<MemberVO> membersList = new ArrayList();
 		try {
