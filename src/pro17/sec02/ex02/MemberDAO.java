@@ -1,4 +1,4 @@
-package pro17.sec02.ex01;
+package pro17.sec02.ex02;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -29,7 +29,7 @@ public class MemberDAO {
 		}
 	}
 	
-	// 멤버 조회하기
+	// 전체멤버 조회하기
 	public List<MemberVO> listMembers() {
 		List<MemberVO> membersList = new ArrayList();
 		try {
@@ -78,6 +78,73 @@ public class MemberDAO {
 			pstmt.executeUpdate();
 			pstmt.close();
 			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// 회원ID로 정보 조회하기
+	public MemberVO findMember(String _id) {
+		MemberVO memInfo = null;
+		try {
+			con = dataFactory.getConnection();
+			// 전달된 ID로 회원정보를 조회
+			String query = "select * from t_member where id=?";
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, _id);
+			System.out.println(query);
+			ResultSet rs = pstmt.executeQuery();
+			
+			rs.next();
+			String id = rs.getString("id");
+			String pwd = rs.getString("pwd");
+			String name = rs.getString("name");
+			String email = rs.getString("email");
+			Date joinDate = rs.getDate("joinDate");
+			memInfo = new MemberVO(id, pwd, name, email, joinDate);
+			
+			pstmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return memInfo;
+	}
+	
+	// 회원 정보 수정하기
+	public void modMember(MemberVO memberVO) {
+		String id = memberVO.getId();
+		String pwd = memberVO.getPwd();
+		String name = memberVO.getName();
+		String email = memberVO.getEmail();
+		try {
+			con = dataFactory.getConnection();
+			// 전달된 수정 회원 정보를 update문을 이용해 수정
+			String query = "update t_member set pwd=?, name=?, email=? where id=?";
+			System.out.println(query);
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, pwd);
+			pstmt.setString(2, name);
+			pstmt.setString(3, email);
+			pstmt.setString(4, id);
+			pstmt.executeUpdate();
+			pstmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// 회원 정보 삭제하기
+	public void delMember(String id) {
+		try {
+			con = dataFactory.getConnection();
+			// delete문을 이용해 전달된 ID의 회원 정보를 조회
+			String query = "delete from t_member where id=?";
+			System.out.println(query);
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
