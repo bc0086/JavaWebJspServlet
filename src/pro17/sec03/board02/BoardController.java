@@ -19,7 +19,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-@WebServlet("/board/*")
+//@WebServlet("/board/*")
 public class BoardController extends HttpServlet {
 	private static String ARTICLE_IMAGE_REPO = "C:\\03Workspace/file_repo";
 		// 글에 첨부한 이미지 저장 위치를 상수로 선언

@@ -82,8 +82,10 @@ public class ArticleVO {
 
 	public void setImageFileName(String imageFileName) {
 		try {
-			this.imageFileName = URLEncoder.encode(imageFileName, "UTF-8");
-				//파일이름에 특수문자가 있을 경우 인코딩합니다.
+			if(imageFileName!=null && imageFileName.length()!=0) {
+				this.imageFileName = URLEncoder.encode(imageFileName, "UTF-8");
+					//파일이름에 특수문자가 있을 경우 인코딩합니다.
+			}
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

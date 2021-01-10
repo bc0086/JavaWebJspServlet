@@ -16,8 +16,9 @@ public class BoardService {
 	}
 
 	// 게시판 글 작성하기
-	public void addArticle(ArticleVO article) {
-		boardDAO.insertNewArticle(article);
+	public int addArticle(ArticleVO article) {
+		return boardDAO.insertNewArticle(article);
+			// 새 글 번호를 컨트롤러로 반환
 	}
 
 }

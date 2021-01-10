@@ -2,6 +2,7 @@ package pro17.sec03.board03;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
 
 @WebServlet("/board/*")
 public class BoardController extends HttpServlet {
@@ -59,6 +61,7 @@ public class BoardController extends HttpServlet {
 			
 			// action값이 /addArticle.do이면 새 글 추가작업을 수행함
 			} else if (action.equals("/addArticle.do")) {
+				int articleNO = 0;
 				Map<String, String> articleMap = upload(request, response);
 				// articleMap에 저장된 글 정보를 다시 가져옴
 				String title = articleMap.get("title");
@@ -72,9 +75,27 @@ public class BoardController extends HttpServlet {
 				articleVO.setContent(content);
 				articleVO.setImageFileName(imageFileName);
 				
-				boardService.addArticle(articleVO);
-				nextPage = "/board/listArticles.do";
+				articleNO = boardService.addArticle(articleVO);
+					// 테이블에 새 글을 추가한 후 새글에 대한 글 번호를 가져옴
+				
+				if(imageFileName != null && imageFileName.length() != 0) {
+					File srcFile = new File(ARTICLE_IMAGE_REPO + "\\"+"temp"+"\\"+imageFileName);
+						// temp 폴더에 임시로 업로드 된 파일 객체를 생성함.
+					File destDir = new File(ARTICLE_IMAGE_REPO +"\\"+articleNO );
+					destDir.mkdirs();
+						// CURR_IMAGE_REPO_PATH의 경로 하위에 글 번호로 폴더를 생성
+					FileUtils.moveFileToDirectory(srcFile, destDir, true);
+						// temp 폴더의 파일을 글 번호를 이름으로 하는 폴더로 이동시킴
+				}
 			
+				/* 새 글 등록 메세지를 나타낸 후 자바스크립트 location 객체의 href 속성을
+				 * 이용해 글 목록을 요청함 */
+				PrintWriter pw = response.getWriter();
+				pw.print("<script>" 
+						+ " alert('새 글을 추가했습니다.');"
+						+ " location.href='"+ request.getContextPath()+ "/board/listArticles.do';" 
+						+ "</script>");
+				return;		
 			}
 			RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
 			dispatch.forward(request, response);
@@ -122,11 +143,10 @@ public class BoardController extends HttpServlet {
 						}
 						String fileName = fileItem.getName().substring(idx + 1);
 							// 업로드 한 파일이름을 가져옴
-						articleMap.put(fileItem.getFieldName(), fileName);
-							/* 업로드된 파일의 파일이름을 Map의 
-							 * ("imageFileName","업로드파일이름")로 저장 */
-						File uploadFile = new File(currentDirPath + "\\" + fileName);
-							// 업로드 한 파일이름으로 저장소에 파일을 업로드함.
+						articleMap.put(fileItem.getFieldName(), fileName);  
+							//익스플로러에서 업로드 파일의 경로 제거 후 map에 파일명 저장
+						File uploadFile = new File(currentDirPath + "\\temp\\" + fileName);
+							// 첨부한 파일을 먼저 temp폴더에 업로드함
 						fileItem.write(uploadFile);
 					} // end if
 				} // end if

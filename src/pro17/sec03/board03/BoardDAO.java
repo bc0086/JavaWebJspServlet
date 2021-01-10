@@ -93,11 +93,11 @@ public class BoardDAO {
 	}
 	
 	// 게시판 새 글 작성하기
-	public void insertNewArticle(ArticleVO article) {
+	public int insertNewArticle(ArticleVO article) {
+		int articleNO = getNewArticleNO();
+			// 새 글을 추가하기 전에 새 글에 대한 글 번호를 가져옴
 		try {
 			conn = dataFactory.getConnection();
-			int articleNO = getNewArticleNO();
-				// 새 글을 추가하기 전에 새 글에 대한 글 번호를 가져옴
 			int parentNO = article.getParentNO();
 			String title = article.getTitle();
 			String content = article.getContent();
@@ -121,7 +121,8 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		return articleNO;
+			// SQL문으로 새 글을 추가하고 새 글 번호를 반환함
 	}
 
 	
