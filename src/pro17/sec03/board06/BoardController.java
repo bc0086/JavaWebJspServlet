@@ -1,4 +1,4 @@
-package pro17.sec03.board04;
+package pro17.sec03.board06;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class BoardController extends HttpServlet {
 			if (action == null) {
 				articlesList = boardService.listArticles();
 				request.setAttribute("articlesList", articlesList);
-				nextPage = "/pro17_board04/listArticles.jsp";
+				nextPage = "/pro17_board05/listArticles.jsp";
 				
 			// action값이 /listArticles.do이면 전체 글을 조회
 			} else if (action.equals("/listArticles.do")) {
@@ -53,11 +53,11 @@ public class BoardController extends HttpServlet {
 					// 전체글을 조회
 				request.setAttribute("articlesList", articlesList);
 					// 조회된 글 목록을 articlesList로 바인딩한 후 listArticles.jsp로 포워딩
-				nextPage = "/pro17_board04/listArticles.jsp";
+				nextPage = "/pro17_board05/listArticles.jsp";
 				
 			// action값이 /articleForm.do이면 글쓰기 창이 나타남	
 			} else if (action.equals("/articleForm.do")) {
-				nextPage = "/pro17_board04/articleForm.jsp";
+				nextPage = "/pro17_board05/articleForm.jsp";
 			
 			// action값이 /addArticle.do이면 새 글 추가작업을 수행함
 			} else if (action.equals("/addArticle.do")) {
@@ -103,8 +103,58 @@ public class BoardController extends HttpServlet {
 				articleVO = boardService.viewArticle(Integer.parseInt(articleNO)); 
 				request.setAttribute("article", articleVO);
 					// articleVO에 대한 글 정보를 조회하고 acticle 속성으로 바인딩
-				nextPage = "/pro17_board04/viewArticle.jsp";
+				nextPage = "/pro17_board05/viewArticle.jsp";
+			
+			// action값이 /modArticle.do이면 글 수정하기 작업을 수행함
+			} else if(action.equals("/modArticle.do")) {
+				Map<String, String> articleMap = upload(request, response);
+				int articleNO = Integer.parseInt(articleMap.get("articleNO"));
+				articleVO.setArticleNO(articleNO);
+				
+				// articleMap에 저장된 글 정보를 다시 가져옴
+				String title = articleMap.get("title");
+				String content = articleMap.get("content");
+				String imageFileName = articleMap.get("imageFileName");
+				
+				// 글쓰기 창에서 입력된 정보를 ArticleVO객체에 설정
+				articleVO.setParentNO(0); 
+				articleVO.setId("hong"); // 새 글 작성자 ID를 hong으로 설정
+				articleVO.setTitle(title);
+				articleVO.setContent(content);
+				articleVO.setImageFileName(imageFileName);
+				
+				// 전송된 글 정보를 이용해 글을 수정함.
+				boardService.modArticle(articleVO);
+				
+				if(imageFileName != null && imageFileName.length() != 0) {
+					String originalFileName = articleMap.get("originalFileName");
+					
+					// 수정된 이미지 파일을 폴더로 이동시키는 작업
+					File srcFile = new File(ARTICLE_IMAGE_REPO + "\\"+"temp"+"\\"+imageFileName);
+						// temp 폴더에 임시로 업로드 된 파일 객체를 생성함.
+					File destDir = new File(ARTICLE_IMAGE_REPO +"\\"+articleNO );
+					destDir.mkdirs();
+						// CURR_IMAGE_REPO_PATH의 경로 하위에 글 번호로 폴더를 생성
+					FileUtils.moveFileToDirectory(srcFile, destDir, true);
+						// temp 폴더의 파일을 글 번호를 이름으로 하는 폴더로 이동시킴
+					
+					// 전송된 origanalImageFileName을 이용해 기존의 파일을 삭제
+					File oldFile = new File(ARTICLE_IMAGE_REPO +"\\"+articleNO+"\\"+originalFileName);
+					oldFile.delete();
+				}
+				/* 새 글 등록 메세지를 나타낸 후 자바스크립트 location 객체의 href 속성을
+				 * 이용해 글 상세화면을 나타냄 */
+				PrintWriter pw = response.getWriter();
+				pw.print("<script>" 
+						+ " alert('수정되었습니다.');"
+						+ " location.href='"+ request.getContextPath()
+						+ "/board/viewArticle.do?articleNO=" + articleNO + "';" 
+						+ "</script>");
+				return;
+			} else {
+				nextPage = "/pro17_board05/listArticles.jsp";
 			}
+			
 			RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
 			dispatch.forward(request, response);
 		} catch (Exception e) {
