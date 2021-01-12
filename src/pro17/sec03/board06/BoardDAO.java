@@ -204,6 +204,54 @@ public class BoardDAO {
 		}
 	}
 
+	// 삭제할 글에 대한 글 번호를 가져옴
+	public List<Integer> selectRemovedArticles(int articleNO) {
+		List<Integer> articleNOList = new ArrayList<Integer>();
+		try {
+			conn = dataFactory.getConnection();
+			String query = "SELECT articleNO FROM t_board";
+			query += " START WITH articleNO = ?";
+			query += " CONNECT BY PRIOR articleNO = parentNO";
+			System.out.println(query);
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, articleNO);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				articleNO = rs.getInt("articleNO");
+				articleNOList.add(articleNO);
+			}
+			pstmt.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return articleNOList;
+	}
+	
+	// 전달된 articleNO에 대한 글을 삭제
+	public void deleteArticle(int articleNO) {
+		try {
+			conn = dataFactory.getConnection();
+			
+			// 오라클의 계층형 SQL문을 이용해 삭제 글과 관련된 자식 글까지 모두 삭제
+			String query = " DELETE FROM t_board";
+			query += " WHERE articleNO in (";
+			query += " SELECT articleNO FROM t_board";
+			query += " START WITH articleNO = ?";
+			query += " CONNECT BY PRIOR articleNO = parentNO )";
+			System.out.println("query");
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, articleNO);
+			pstmt.executeUpdate();
+			pstmt.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	
 
 }

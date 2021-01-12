@@ -16,8 +16,7 @@
      #tr_btn_modify{
        display:none;
      }
-   
-   </style>
+</style>
 <script src = "../js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
 	//제이쿼리를 이용해 이미지 파일 텀부 시 미리보기 기능을 구현
@@ -48,6 +47,28 @@
    		obj.action = "${contextPath}/board/modArticle.do";
     	obj.submit();
     }
+	
+	// 삭제하기 클릭 시 fn_remove_article() 자바스크립트 함수를 호출하면서 articleNO를 전달
+	function fn_remove_article(url, articleNO) {
+		// 1. 자바스크립트를 이용해 동적으로 form태그를 생성
+		var form = document.createElement("form");
+		form.setAttribute("method", "post");
+		form.setAttribute("action", url);
+		
+		// 2. 자바스크립트를 이용해 동적으로 input태그를 생성한 후 name과 value를
+		//		articleNO와 컨트롤러로 글 번호로 설정함
+		var articleNOInput = document.createElement("input");
+		articleNOInput.setAttribute("type", "hidden");
+		articleNOInput.setAttribute("name", "articleNO");
+		articleNOInput.setAttribute("value", articleNO);
+		
+		// 3. 동적으로 생성된 input태그를 동적으로 생성한 form태그에 append함
+		form.appendChild(articleNOInput);
+		
+		// 4. form태그를 body태그에 추가(append)한 후 서버에 요청함
+		document.body.appendChild(form);
+		form.submit();
+	}
 </script>
 </head>
 <body>
@@ -121,19 +142,20 @@
            		<input type=button value="취소" onClick="backToList(frmArticle)">
 	   		</td>   
   		</tr>
-    
+    	
   		<tr id="tr_btn" >
    			<td colspan=2 align="center">
 	  			<input type=button value="수정하기" onClick="fn_enable(this.form)">
 	  			<input type=button value="삭제하기" 
 	  				onClick="fn_remove_article('${contextPath}/board/removeArticle.do', 
 	  					${article.articleNO})">
-	  			<input type=button value="리스트로 돌아가기"  onClick="backToList(this.form)">
+	 			<input type=button value="리스트로 돌아가기"  onClick="backToList(this.form)">
 	  			<input type=button value="답글쓰기"  
 	  				onClick="fn_reply_form('${contextPath}/board/replyForm.do', 
 	  					${article.articleNO})">
-   			</td>
+ 			</td>
   		</tr>
+  		
 	</table>
 </form>
 </body>

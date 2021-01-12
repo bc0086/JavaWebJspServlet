@@ -21,7 +21,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 
-//@WebServlet("/board/*")
+@WebServlet("/board/*")
 public class BoardController extends HttpServlet {
 	private static String ARTICLE_IMAGE_REPO = "C:\\03Workspace/file_repo";
 		// 글에 첨부한 이미지 저장 위치를 상수로 선언
@@ -45,7 +45,7 @@ public class BoardController extends HttpServlet {
 			if (action == null) {
 				articlesList = boardService.listArticles();
 				request.setAttribute("articlesList", articlesList);
-				nextPage = "/pro17_board05/listArticles.jsp";
+				nextPage = "/pro17_board06/listArticles.jsp";
 				
 			// action값이 /listArticles.do이면 전체 글을 조회
 			} else if (action.equals("/listArticles.do")) {
@@ -53,11 +53,11 @@ public class BoardController extends HttpServlet {
 					// 전체글을 조회
 				request.setAttribute("articlesList", articlesList);
 					// 조회된 글 목록을 articlesList로 바인딩한 후 listArticles.jsp로 포워딩
-				nextPage = "/pro17_board05/listArticles.jsp";
+				nextPage = "/pro17_board06/listArticles.jsp";
 				
 			// action값이 /articleForm.do이면 글쓰기 창이 나타남	
 			} else if (action.equals("/articleForm.do")) {
-				nextPage = "/pro17_board05/articleForm.jsp";
+				nextPage = "/pro17_board06/articleForm.jsp";
 			
 			// action값이 /addArticle.do이면 새 글 추가작업을 수행함
 			} else if (action.equals("/addArticle.do")) {
@@ -103,7 +103,7 @@ public class BoardController extends HttpServlet {
 				articleVO = boardService.viewArticle(Integer.parseInt(articleNO)); 
 				request.setAttribute("article", articleVO);
 					// articleVO에 대한 글 정보를 조회하고 acticle 속성으로 바인딩
-				nextPage = "/pro17_board05/viewArticle.jsp";
+				nextPage = "/pro17_board06/viewArticle.jsp";
 			
 			// action값이 /modArticle.do이면 글 수정하기 작업을 수행함
 			} else if(action.equals("/modArticle.do")) {
@@ -151,8 +151,33 @@ public class BoardController extends HttpServlet {
 						+ "/board/viewArticle.do?articleNO=" + articleNO + "';" 
 						+ "</script>");
 				return;
+			
+			// action값이 /removeArticle.do이면 글 삭제 작업을 수행
+			} else if(action.equals("/removeArticle.do")) {
+				int articleNO = Integer.parseInt(request.getParameter("articleNO"));
+				
+				// articleNO값에 대한 글을 삭제한 후 삭제된 부모 글과 자식글의 articleNO목록을 가져옴
+				List<Integer> articleNOList = boardService.removeArticle(articleNO);
+				
+				// 삭제된 글들의 이미지 저장 폴더들을 삭제
+				for(int _articleNO : articleNOList) {
+					File imgDir = new File(ARTICLE_IMAGE_REPO + "\\" + _articleNO);
+					if(imgDir.exists()) {
+						FileUtils.deleteDirectory(imgDir);
+					}
+				}
+				
+				PrintWriter pw = response.getWriter();
+				pw.print("<script>" 
+						+ " alert('글이 삭제되었습니다.');"
+						+ " location.href='"+ request.getContextPath()
+						+ "/board/listArticles.do';" 
+						+ "</script>");
+				return;
+				
+			
 			} else {
-				nextPage = "/pro17_board05/listArticles.jsp";
+				nextPage = "/pro17_board06/listArticles.jsp";
 			}
 			
 			RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
