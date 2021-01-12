@@ -1,4 +1,4 @@
-package pro17.sec03.board06;
+package pro17.sec03.board07;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +21,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 
-//@WebServlet("/board/*")
+@WebServlet("/board/*")
 public class BoardController extends HttpServlet {
 	private static String ARTICLE_IMAGE_REPO = "C:\\03Workspace/file_repo";
 		// 글에 첨부한 이미지 저장 위치를 상수로 선언
@@ -45,7 +45,7 @@ public class BoardController extends HttpServlet {
 			if (action == null) {
 				articlesList = boardService.listArticles();
 				request.setAttribute("articlesList", articlesList);
-				nextPage = "/pro17_board06/listArticles.jsp";
+				nextPage = "/pro17_board07/listArticles.jsp";
 				
 			// action값이 /listArticles.do이면 전체 글을 조회
 			} else if (action.equals("/listArticles.do")) {
@@ -53,11 +53,11 @@ public class BoardController extends HttpServlet {
 					// 전체글을 조회
 				request.setAttribute("articlesList", articlesList);
 					// 조회된 글 목록을 articlesList로 바인딩한 후 listArticles.jsp로 포워딩
-				nextPage = "/pro17_board06/listArticles.jsp";
+				nextPage = "/pro17_board07/listArticles.jsp";
 				
 			// action값이 /articleForm.do이면 글쓰기 창이 나타남	
 			} else if (action.equals("/articleForm.do")) {
-				nextPage = "/pro17_board06/articleForm.jsp";
+				nextPage = "/pro17_board07/articleForm.jsp";
 			
 			// action값이 /addArticle.do이면 새 글 추가작업을 수행함
 			} else if (action.equals("/addArticle.do")) {
@@ -103,7 +103,7 @@ public class BoardController extends HttpServlet {
 				articleVO = boardService.viewArticle(Integer.parseInt(articleNO)); 
 				request.setAttribute("article", articleVO);
 					// articleVO에 대한 글 정보를 조회하고 acticle 속성으로 바인딩
-				nextPage = "/pro17_board06/viewArticle.jsp";
+				nextPage = "/pro17_board07/viewArticle.jsp";
 			
 			// action값이 /modArticle.do이면 글 수정하기 작업을 수행함
 			} else if(action.equals("/modArticle.do")) {
@@ -177,7 +177,7 @@ public class BoardController extends HttpServlet {
 				
 			
 			} else {
-				nextPage = "/pro17_board06/listArticles.jsp";
+				nextPage = "/pro17_board07/listArticles.jsp";
 			}
 			
 			RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
