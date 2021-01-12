@@ -22,7 +22,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 
-@WebServlet("/board/*")
+//@WebServlet("/board/*")
 public class BoardController extends HttpServlet {
 	private static String ARTICLE_IMAGE_REPO = "C:\\03Workspace/file_repo";
 		// 글에 첨부한 이미지 저장 위치를 상수로 선언
@@ -183,7 +183,7 @@ public class BoardController extends HttpServlet {
 				int parentNO = Integer.parseInt(request.getParameter("parentNO"));
 				session = request.getSession();
 				session.setAttribute("parentNO", parentNO);
-				nextPage = "/pro17_board07/replayForm.jsp";
+				nextPage = "/pro17_board07/replyForm.jsp";
 				
 			// action값이 /addReply.do이면 답글창 요청기능 수행
 			} else if(action.equals("/addReply.do")) {

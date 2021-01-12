@@ -69,6 +69,23 @@
 		document.body.appendChild(form);
 		form.submit();
 	}
+	
+	// 답글쓰기 클릭 시 해당함수를 호출하면서 요청명과 글 번호를 전달 받음
+	function fn_reply_form(url, parentNO) {
+		var form = document.createElement("form");
+		form.setAttribute("method","post");
+		form.setAttribute("action",url); 
+			// 전달된 요청명을 form태그의 action 속성값에 설정
+		
+		var parentNOInput = document.createElement("input");
+		parentNOInput.setAttribute("type", "hidden");
+		parentNOInput.setAttribute("name", "parentNO");
+		parentNOInput.setAttribute("value", parentNO);
+		
+		form.appendChild(parentNOInput);
+		document.body.appendChild(form);
+		form.submit();
+	}
 </script>
 </head>
 <body>
