@@ -52,3 +52,30 @@ WHERE articleNO in (
         START WITH articleNO= 2 -- 글번호가 2인 글가 자식글을 삭제
         CONNECT BY PRIOR articleNO = parentNO
     );
+    
+-- section과 pageNum으로 글 목록 조회하는 SQL문
+    -- 서브쿼리문과 오라클에서 제공하는 가상컬럼인 ROWNUM을 이용함.
+SELECT *
+FROM (
+    SELECT ROWNUM as recNum, -- 계층형으로 조회된 레코드의 ROWNUM(recNum)이 표시되도록 조회
+            LVL,
+            articleNO,
+            parentNO,
+            title,            
+            id,
+            writeDate
+    FROM (
+        SELECT LEVEL as LVL, -- 계층형 SQL문으로 글을 계층별로 조회
+                articleNO,
+                parentNO,
+                title,
+                id,
+                writeDate
+        FROM t_board
+        START WITH parentNO=0
+        CONNECT BY PRIOR articleNO=parentNO
+        ORDER SIBLINGS BY articleNO DESC
+    )
+)
+WHERE recNum between(section-1)*100+(pageNum-1)*10+1 and (section-1)*100+pageNum*10; 
+    -- section과 pageNum값으로 조건식의 recNum범위를 정한 후 조회된 글 중 해당하는 값이 있는 경우 최종적으로 조회
