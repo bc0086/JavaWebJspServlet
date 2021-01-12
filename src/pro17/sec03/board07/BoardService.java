@@ -41,4 +41,10 @@ public class BoardService {
 		return articleNOList; // 삭제한 글 번호 목록을 컨트롤러로 반환
 	}
 
+	// 게시판 답글 쓰기
+	public int addReply(ArticleVO article) {
+		// 새 글 추가시 사용한 insertNewArticle() 메서드를 이용해 답글을 추가함
+		return boardDAO.insertNewArticle(article);
+	}
+
 }
