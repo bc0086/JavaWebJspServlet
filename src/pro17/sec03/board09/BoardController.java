@@ -1,4 +1,4 @@
-package pro17.sec03.board08;
+package pro17.sec03.board09;
 
 import java.io.File;
 import java.io.IOException;
@@ -69,7 +69,7 @@ public class BoardController extends HttpServlet {
 				
 				// 조회된 글 목록을 articlesMap으로 바인딩하여 listArticles.jsp로 넘김
 				request.setAttribute("articlesMap", articlesMap);
-				nextPage = "/pro17_board08/listArticles.jsp";
+				nextPage = "/pro17_board09/listArticles.jsp";
 				
 			// action값이 /listArticles.do이면 전체 글을 조회
 			} else if (action.equals("/listArticles.do")) {
@@ -87,11 +87,11 @@ public class BoardController extends HttpServlet {
 				articlesMap.put("pageNum", pageNum);
 				
 				request.setAttribute("articlesMap", articlesMap);
-				nextPage = "/pro17_board08/listArticles.jsp";
+				nextPage = "/pro17_board09/listArticles.jsp";
 				
 			// action값이 /articleForm.do이면 글쓰기 창이 나타남	
 			} else if (action.equals("/articleForm.do")) {
-				nextPage = "/pro17_board08/articleForm.jsp";
+				nextPage = "/pro17_board09/articleForm.jsp";
 			
 			// action값이 /addArticle.do이면 새 글 추가작업을 수행함
 			} else if (action.equals("/addArticle.do")) {
@@ -137,7 +137,7 @@ public class BoardController extends HttpServlet {
 				articleVO = boardService.viewArticle(Integer.parseInt(articleNO)); 
 				request.setAttribute("article", articleVO);
 					// articleVO에 대한 글 정보를 조회하고 acticle 속성으로 바인딩
-				nextPage = "/pro17_board08/viewArticle.jsp";
+				nextPage = "/pro17_board09/viewArticle.jsp";
 			
 			// action값이 /modArticle.do이면 글 수정하기 작업을 수행함
 			} else if(action.equals("/modArticle.do")) {
@@ -215,7 +215,7 @@ public class BoardController extends HttpServlet {
 				int parentNO = Integer.parseInt(request.getParameter("parentNO"));
 				session = request.getSession();
 				session.setAttribute("parentNO", parentNO);
-				nextPage = "/pro17_board08/replyForm.jsp";
+				nextPage = "/pro17_board09/replyForm.jsp";
 				
 			// action값이 /addReply.do이면 답글창 요청기능 수행
 			} else if(action.equals("/addReply.do")) {
@@ -258,7 +258,7 @@ public class BoardController extends HttpServlet {
 						+ "</script>");
 				return;
 			} else {
-				nextPage = "/pro17_board08/listArticles.jsp";
+				nextPage = "/pro17_board09/listArticles.jsp";
 			}
 			
 			RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
