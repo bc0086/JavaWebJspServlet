@@ -79,3 +79,12 @@ FROM (
 )
 WHERE recNum between(section-1)*100+(pageNum-1)*10+1 and (section-1)*100+pageNum*10; 
     -- section과 pageNum값으로 조건식의 recNum범위를 정한 후 조회된 글 중 해당하는 값이 있는 경우 최종적으로 조회
+
+-- board09 : 새글과 답변글에 아이콘 붙이기    
+-- 1step. 현재 시각 구하기
+select sysdate from dual;
+
+-- 2step. 글 작성 시각(24시간이내) 구하기
+select decode(round(sysdate - writedate),0,'true','false') as isNewArticle from t_board;
+
+-- board10 : 공지글 기능

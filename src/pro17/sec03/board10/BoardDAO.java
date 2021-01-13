@@ -1,4 +1,4 @@
-package pro17.sec03.board09;
+package pro17.sec03.board10;
 
 import java.sql.Connection;
 import java.sql.Date;

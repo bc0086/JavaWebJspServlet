@@ -56,6 +56,7 @@
 	  					<span style="padding-right:30px"></span>
 							<!-- 왼쪽으로 30px만큼 여백을 준 후 글 제목을 표시 -->
 	  					
+	  					<!-- 새 글 작성이 아이콘 추가 -->
 	  					<c:choose>
 	  						<c:when test="${article.level > 1 }">
 	  							<c:forEach begin="1" end="${article.level }" step="1">
@@ -63,10 +64,20 @@
 	  							</c:forEach>
 	  							<span style="font-size:12px;">[답변]</span>
 	  							<a class="cls1" href="${contextPath }/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
+	  							<img src="${contextPath }/image/ico_re.gif" alt="" />
 	  						</c:when>
 	  						
 	  						<c:otherwise>
-	  							<a class="cls1" href="${contextPath }/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
+	  							<c:choose>
+	  								<c:when test="${article.newArticle== true }">
+	  									<a class="cls1" href="${contextPath }/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
+	  									<img src="${contextPath }/image/ico_new.gif" alt="" />
+	  								</c:when>
+	  								
+	  								<c:otherwise>
+	  									<a class="cls1" href="${contextPath }/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
+	  								</c:otherwise>
+	  							</c:choose>
 	  						</c:otherwise>
 	  					</c:choose>
 	  				</td>
@@ -86,36 +97,33 @@
   			<c:choose>
   				<c:when test="${totArticles > 100 }">
   					<c:forEach var="page" begin="1" end="10" step="1">
-  						<!-- 섹션값 2부터는 앞 섹션으로 이동할 수 있는 pre를 표시 -->
   						<c:if test="${section>1 && page==1 }">
   							<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section-1}&pageNum=${(section-1)*10+1}"> &nbsp; pre </a>
   						</c:if>
 						  						
   						<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section}&pageNum=${page}">${(section-1)*10 + page }</a>
   						
-  						<!-- 페이지번호 10 오른쪽에는 다음 섹션으로 이동할 수 있는 next를 표시 -->
-  						<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section+1}&pageNum=${section*10+1}"> &nbsp; next </a>
+  						<c:if test="${page ==10 }">
+  							<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section+1}&pageNum=${section*10+1}"> &nbsp; next </a>
+  						</c:if>
   					</c:forEach>
   				</c:when>
   				
-  				<!-- 전체 글 수가 100개일 때는 첫 번째 섹션의 10개 페이지만 표시하면 됨 -->
   				<c:when test="${totArticles == 100 }">
   					<c:forEach var="page" begin="1" end="10" step="1">
-						<a href="" class="no-uline">#${page }</a>
+						<a href="" class="no-uline">${page }</a>
   					</c:forEach>
   				</c:when>
   				
   				<c:when test="${totArticles < 100 }">
   					<c:forEach var="page" begin="1" end="${totArticles/10 + 1}" step="1">
   						<c:choose>
-  							<!-- 페이지번호와 컨트롤러에서 넘어온 pageNum이 같은 경우 횬재 사용자가 보고 있는 페이지임을 색깔로 알림 -->
   							<c:when test="${page==pageNum }">
   								<a class="sel-page" href="${contextPath }/board/listArticles.do?section=${section}&pageNum=${page}">${page }</a>
   							</c:when>
   							
-  							<!-- 페이지 번호를 클릭하면 section값과 pageNum값을 컨트롤러로 전송 -->
   							<c:otherwise>
-  								<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section}&pageNum=${page}">${page }</a>
+								<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section}&pageNum=${page}">${page }</a>
   							</c:otherwise>
   						</c:choose>
   					</c:forEach>

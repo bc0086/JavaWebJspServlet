@@ -56,6 +56,7 @@
 	  					<span style="padding-right:30px"></span>
 							<!-- 왼쪽으로 30px만큼 여백을 준 후 글 제목을 표시 -->
 	  					
+	  					<!-- 새 글 작성이 아이콘 추가 -->
 	  					<c:choose>
 	  						<c:when test="${article.level > 1 }">
 	  							<c:forEach begin="1" end="${article.level }" step="1">
@@ -63,10 +64,20 @@
 	  							</c:forEach>
 	  							<span style="font-size:12px;">[답변]</span>
 	  							<a class="cls1" href="${contextPath }/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
+	  							<img src="${contextPath }/image/ico_re.gif" alt="" />
 	  						</c:when>
 	  						
 	  						<c:otherwise>
-	  							<a class="cls1" href="${contextPath }/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
+	  							<c:choose>
+	  								<c:when test="${article.newArticle== true }">
+	  									<a class="cls1" href="${contextPath }/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
+	  									<img src="${contextPath }/image/ico_new.gif" alt="" />
+	  								</c:when>
+	  								
+	  								<c:otherwise>
+	  									<a class="cls1" href="${contextPath }/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
+	  								</c:otherwise>
+	  							</c:choose>
 	  						</c:otherwise>
 	  					</c:choose>
 	  				</td>
@@ -112,7 +123,7 @@
   							</c:when>
   							
   							<c:otherwise>
-  								<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section}&pageNum=${page}">${page }</a>
+								<a class="no-uline" href="${contextPath }/board/listArticles.do?section=${section}&pageNum=${page}">${page }</a>
   							</c:otherwise>
   						</c:choose>
   					</c:forEach>

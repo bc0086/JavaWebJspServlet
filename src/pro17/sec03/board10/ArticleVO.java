@@ -1,4 +1,4 @@
-package pro17.sec03.board09;
+package pro17.sec03.board10;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
