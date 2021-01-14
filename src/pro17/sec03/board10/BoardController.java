@@ -101,6 +101,7 @@ public class BoardController extends HttpServlet {
 				String title = articleMap.get("title");
 				String content = articleMap.get("content");
 				String imageFileName = articleMap.get("imageFileName");
+				String notice_yn = articleMap.get("notice_yn");
 
 				// 글쓰기 창에서 입력된 정보를 ArticleVO객체에 설정한 후 addArticle()로 전달
 				articleVO.setParentNO(0); 
@@ -108,6 +109,7 @@ public class BoardController extends HttpServlet {
 				articleVO.setTitle(title);
 				articleVO.setContent(content);
 				articleVO.setImageFileName(imageFileName);
+				articleVO.setNotice_yn(notice_yn);
 				
 				articleNO = boardService.addArticle(articleVO);
 					// 테이블에 새 글을 추가한 후 새글에 대한 글 번호를 가져옴

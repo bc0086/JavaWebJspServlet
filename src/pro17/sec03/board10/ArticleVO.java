@@ -16,6 +16,9 @@ public class ArticleVO {
 	private Date writeDate;
 	// 게시판에 새 글 표시하기(new표시 아이콘)
 	private boolean newArticle;
+	// 게시판에 공지글 표시하기
+	private String notice_yn;
+	
 	
 	public ArticleVO() {
 	}
@@ -116,6 +119,17 @@ public class ArticleVO {
 	public void setNewArticle(boolean newArticle) {
 		this.newArticle = newArticle;
 	}
+
+	public String getNotice_yn() {
+		return notice_yn;
+	}
+
+	public void setNotice_yn(String notice_yn) {
+		this.notice_yn = notice_yn;
+	}
+
+	
+	
 	
 	
 	

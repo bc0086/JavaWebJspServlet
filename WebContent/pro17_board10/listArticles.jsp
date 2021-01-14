@@ -12,6 +12,7 @@
 <c:set var="totArticles" value="${articlesMap.totArticles }" />
 <c:set var="section" value="${articlesMap.section }" />
 <c:set var="pageNum" value="${articlesMap.pageNum }" />
+<c:set var="noticeList" value="${articlesMap.noticeArticlesList }" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,48 +46,91 @@
   			</c:when>
   			
   			<c:when test="${articlesList != null }">
-  				<c:forEach var="article" items="${articlesList }" varStatus="articleNum">
-	  				<!-- articleList로 포워딩 된 글 목록을 forEach태그를 이용해 표시 -->
-  					<tr align="center">
-  					<td width="5%">${articleNum.count}</td>
-	  					<!-- forEach태그의 varStatus의 count속성을 이용해 글 번호를 1부터 자동표시 -->
-					<td width="10%">${article.id }</td>
+  				<tr align="center">
+  					<c:forEach var="article" items="${noticeList }" varStatus="articleNum">
+	  					<!-- noticeList로 포워딩 된 글 목록을 forEach태그를 이용해 표시 -->
+  						<tr align="center">
+  							<td width="5%">${articleNum.count}</td>
+	  							<!-- forEach태그의 varStatus의 count속성을 이용해 글 번호를 1부터 자동표시 -->
+							<td width="10%">${article.id }</td>
 					
-					<td align='left'  width="35%">
-	  					<span style="padding-right:30px"></span>
-							<!-- 왼쪽으로 30px만큼 여백을 준 후 글 제목을 표시 -->
+							<td align='left'  width="35%">
+	  							<span style="padding-right:30px"></span>
+									<!-- 왼쪽으로 30px만큼 여백을 준 후 글 제목을 표시 -->
 	  					
-	  					<!-- 새 글 작성이 아이콘 추가 -->
-	  					<c:choose>
-	  						<c:when test="${article.level > 1 }">
-	  							<c:forEach begin="1" end="${article.level }" step="1">
-	  								<span style="padding-left:20px"></span>
-	  							</c:forEach>
-	  							<span style="font-size:12px;">[답변]</span>
-	  							<a class="cls1" href="${contextPath }/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
-	  							<img src="${contextPath }/image/ico_re.gif" alt="" />
-	  						</c:when>
-	  						
-	  						<c:otherwise>
-	  							<c:choose>
-	  								<c:when test="${article.newArticle== true }">
-	  									<a class="cls1" href="${contextPath }/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
-	  									<img src="${contextPath }/image/ico_new.gif" alt="" />
-	  								</c:when>
-	  								
-	  								<c:otherwise>
-	  									<a class="cls1" href="${contextPath }/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
-	  								</c:otherwise>
-	  							</c:choose>
-	  						</c:otherwise>
-	  					</c:choose>
-	  				</td>
+	  							<!-- 새 글 작성에 아이콘 추가 -->
+		  						<c:choose>
+		  							<c:when test="${article.level > 1 }">
+		  								<c:forEach begin="1" end="${article.level }" step="1">
+		  									<span style="padding-left:20px"></span>
+		  								</c:forEach>
+		  								<span style="font-size:12px;">[답변]</span>
+		  								<a class="cls1" href="${contextPath }/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
+		  								<img src="${contextPath }/image/ico_re.gif" alt="" />
+		  							</c:when>
+		  						
+		  							<c:otherwise>
+		  								<c:choose>
+		  									<c:when test="${article.newArticle== true }">
+		  										<a class="cls1" href="${contextPath }/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
+		  										<img src="${contextPath }/image/ico_new.gif" alt="" />
+		  									</c:when>
+		  								
+		  									<c:otherwise>
+		  										<a class="cls1" href="${contextPath }/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
+		  									</c:otherwise>
+		  								</c:choose>
+		  							</c:otherwise>
+		  						</c:choose>
+		  					</td>
 	  				
-	  				<td width="10%">
-	  					<fmt:formatDate value="${article.writeDate }"/>
-	  				</td>
-	  				</tr>
-  				</c:forEach>
+		  					<td width="10%">
+		  						<fmt:formatDate value="${article.writeDate }"/>
+		  					</td>
+	  					</tr>
+  					</c:forEach>
+  				</tr>
+  				
+				<!-- articleList로 포워딩 된 글 목록을 forEach태그를 이용해 표시 -->
+				<c:forEach var="article" items="${articlesList }" varStatus="articleNum">
+ 					<tr align="center">
+ 						<td width="5%">${articleNum.count}</td>
+  							<!-- forEach태그의 varStatus의 count속성을 이용해 글 번호를 1부터 자동표시 -->
+						<td width="10%">${article.id }</td>
+				
+						<td align='left'  width="35%">
+  							<span style="padding-right:30px"></span>
+								<!-- 왼쪽으로 30px만큼 여백을 준 후 글 제목을 표시 -->
+  					
+  							<!-- 새 글 작성이 아이콘 추가 -->
+  							<c:choose>
+  								<c:when test="${article.level > 1 }">
+  									<c:forEach begin="1" end="${article.level }" step="1">
+  										<span style="padding-left:20px"></span>
+  									</c:forEach>
+  									<span style="font-size:12px;">[답변]</span>
+  									<a class="cls1" href="${contextPath }/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
+  									<img src="${contextPath }/image/ico_re.gif" alt="" />
+  								</c:when>
+  						
+  								<c:otherwise>
+  									<c:choose>
+  										<c:when test="${article.newArticle== true }">
+  											<a class="cls1" href="${contextPath }/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
+  											<img src="${contextPath }/image/ico_new.gif" alt="" />
+  										</c:when>
+  								
+  										<c:otherwise>
+  											<a class="cls1" href="${contextPath }/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
+  										</c:otherwise>
+  									</c:choose>
+  								</c:otherwise>
+  							</c:choose>
+  						</td>
+  				
+  						<td width="10%"><fmt:formatDate value="${article.writeDate }"/></td>
+  					</tr>
+ 				</c:forEach>
   			</c:when>
   		</c:choose>
   	</table>
@@ -131,8 +175,6 @@
   			</c:choose>
   		</c:if>
   	</div>
-  	
-  	
   	
   	<a class="cls1"  href="${contextPath }/board/articleForm.do">
   		<p class="cls2">글쓰기</p>

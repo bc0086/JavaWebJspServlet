@@ -15,11 +15,15 @@ public class BoardService {
 	public Map listArticles(Map<String, Integer> pagingMap) {
 		Map articlesMap = new HashMap();
 		
-		// 전달된 pagingMap을 사용해 글 목록을 조회
-		List<ArticleVO> articlesList = boardDAO.selectAllArticles(pagingMap);
+		// 공지글 여부에 따라 변형
+		List<ArticleVO> noticeArticleList = boardDAO.selectAllArticles(pagingMap,"y");
+		List<ArticleVO> articlesList = boardDAO.selectAllArticles(pagingMap,"n");
 		
 		// 테이블에 존재하는 전체 글 수를 조회
 		int totArticles = boardDAO.selectTotArticles();
+		
+		// 조회된 글 목록을 ArrayList에 저장한 후 다시 articlesMap에 저장
+		articlesMap.put("noticeArticlesList", noticeArticleList);
 		
 		// 조회된 글 목록을 ArrayList에 저장한 후 다시 articlesMap에 저장
 		articlesMap.put("articlesList", articlesList);
