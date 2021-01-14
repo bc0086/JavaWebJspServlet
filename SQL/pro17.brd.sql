@@ -88,3 +88,7 @@ select sysdate from dual;
 select decode(round(sysdate - writedate),0,'true','false') as isNewArticle from t_board;
 
 -- board10 : 공지글 기능
+select * from t_board;
+update t_board
+set notice_yn = 'n';
+commit;
