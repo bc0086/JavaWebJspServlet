@@ -53,7 +53,6 @@
   							<td width="5%">${articleNum.count}</td>
 	  							<!-- forEach태그의 varStatus의 count속성을 이용해 글 번호를 1부터 자동표시 -->
 							<td width="10%">${article.id }</td>
-					
 							<td align='left'  width="35%">
 	  							<span style="padding-right:30px"></span>
 									<!-- 왼쪽으로 30px만큼 여백을 준 후 글 제목을 표시 -->

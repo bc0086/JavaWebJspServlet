@@ -14,7 +14,7 @@
 <title>글쓰기 창</title>
 <script src="../js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
-	// 제이쿼리를 이용해 이미지 파일 텀부 시 미리보기 기능을 구현
+	// 제이쿼리를 이용해 이미지 파일 첨부 시 미리보기 기능을 구현
 	function readURL(input) {
 		if(input.files && input.files[0]) {
 			var reader = new FileReader();
