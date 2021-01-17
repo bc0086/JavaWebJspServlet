@@ -32,9 +32,7 @@
 						<td>${mem.pwd }</td>
 						<td>${mem.name }</td>
 						<td>${mem.email }</td>
-						<td>
-							<fmt:formatDate value="${mem.joinDate }" pattern="dd-MM-YYYY" />
-						</td>
+						<td><fmt:formatDate value="${mem.joinDate }" pattern="dd-MM-YYYY" /></td>
 					</tr>
 				</c:forEach>
 			</c:when>

@@ -36,12 +36,14 @@ public class MemberServlet extends HttpServlet {
 			vo.setEmail(_email);
 			
 			dao.addMember(vo);
-		} 
+		}
+		
 		// command값이 delMember인 경우 ID를 가져와 SQL문으로 전달해서 삭제
 		else if(command != null && command.equals("delMember")) {
 			String id = request.getParameter("id");
 			dao.delMember(id);
 		}
+		
 		List<MemberVO> list = dao.listMembers(); // listMembers()메서드로 회원정보를 조회
 		out.print("<html><body>");
 		out.print("<table border=1><tr align='center' bgcolor = 'lightgreen'>");
