@@ -72,6 +72,4 @@ public class BoardService {
 		return boardDAO.insertNewArticle(article);
 	}
 
-	
-
 }

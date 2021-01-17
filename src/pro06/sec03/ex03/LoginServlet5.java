@@ -21,9 +21,7 @@ public class LoginServlet5 extends HttpServlet {
 		String pw = request.getParameter("user_pw");
 		String address = request.getParameter("user_address");
 			// <hidden>태그로 전송된 값을 받아옴
-		
-		System.out.println("아이디: " + id);
-		System.out.println("비밀번호: " + pw);
+		System.out.println("아이디: " + id + "비밀번호: " + pw);
 		
 		String data = "<html>";
 		data += "<body>";

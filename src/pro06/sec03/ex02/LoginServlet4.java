@@ -11,16 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/login4")
 public class LoginServlet4 extends HttpServlet {
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doGet 메서드 호출됨");
-		doHandle(request, response);
-	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost 메서드 호출");
-		doHandle(request, response);
-	}
-	
 	private void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("utf-8");
@@ -34,6 +24,16 @@ public class LoginServlet4 extends HttpServlet {
 	
 	public void init(ServletConfig config) throws ServletException {
 		System.out.println("init 메서드 호출");
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("doGet 메서드 호출됨");
+		doHandle(request, response);
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("doPost 메서드 호출");
+		doHandle(request, response);
 	}
 
 	public void destroy() {

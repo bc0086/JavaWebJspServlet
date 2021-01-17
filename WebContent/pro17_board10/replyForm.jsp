@@ -11,6 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>답글쓰기</title>
 <script src = "../js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
 	//제이쿼리를 이용해 이미지 파일 텀부 시 미리보기 기능을 구현
@@ -24,7 +25,6 @@
 		}
 	}
 </script>
-<title>Insert title here</title>
 </head>
 <body>
 <h1 style="text-align:center">답글쓰기</h1>

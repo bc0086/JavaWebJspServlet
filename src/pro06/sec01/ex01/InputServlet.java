@@ -16,6 +16,7 @@ public class InputServlet extends HttpServlet {
 		String user_id = request.getParameter("user_id");
 		String user_pw = request.getParameter("user_pw");
 			// 한 개씩 전송된 값은 getParameter()를 이용함
+		
 		System.out.println("아이디:" + user_id);
 		System.out.println("비밀번호:" + user_pw);
 		
